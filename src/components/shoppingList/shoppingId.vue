@@ -1,13 +1,278 @@
 <template>
-    $END$
+    <div>
+        <div style="height: 100px;text-align: center;line-height: 100px">
+            商品详情
+        </div>
+        <div>
+            <van-swipe class="detailImg zmy-swipe" :autoplay="3000" indicator-color="white">
+                <van-swipe-item  v-for="(src, index) in data.images" :key="index">
+                    <img :src="src" alt="">
+                </van-swipe-item>
+            </van-swipe>
+            <div style="min-height: 50px">
+                {{data.productName}}
+            </div>
+            <div style="display: flex;justify-content: center">
+                <div style="color: #FF87C7E9;height: 50px;margin: 0 30px">
+                    {{data.price}}
+                </div>
+                <div style="height: 50px;margin: 0 30px">
+                    <del>{{data.salePrice}}</del>
+                </div>
+            </div>
+        </div>
+        <div >
+            <span v-for="(item,index) in data.catStr" :key="index" style="padding: 0 5px">
+                {{item}}
+            </span><br>
+            <span  style="text-align: left">
+                {{data.productInfo}}
+            </span>
+        </div>
+        <van-row v-for="(item,index) in data.infos" :key="index">
+            <van-col span="4" offset="1">{{item[0]}}</van-col>
+            <van-col span="18" >{{item[1]}}</van-col>
+        </van-row>
+<!--        <div  @click="share(data)">-->
+<!--            +++++++++++++++++++++++-->
+<!--        </div>-->
+        <div style="display: flex;justify-content: center;padding: 30px 0">
+<!--            <div style="padding: 0 40px;background-color: #fff;border-radius: 20px;height: 40px;line-height: 40px;width: 100px;cursor: pointer;border: 1px solid #999" >-->
+<!--                加入购物车-->
+<!--            </div>-->
+            <div  style="padding: 0 50px;background-color: #EFDECC;border-radius: 20px;height: 40px;line-height: 40px;width: 100px;cursor: pointer;margin-left: 20px" @click="share(data)">
+                分享
+            </div>
+<!--            <dd-share class="social-share" :share-config="config"></dd-share>-->
+        </div>
+    </div>
 </template>
 
 <script>
+    import {getById}  from '../../api/api'
     export default {
-        name: "shoppingId"
+        name: "shoppingId",
+        data(){
+            return{
+                data: {
+                    id: ''
+                },
+                browser : '',
+                download_schema : 'shopping://main', //app的协议有安卓同事提供宝
+                 universal_link : 'https://apps.apple.com/us/app/id1519256883',//ios下载地址
+                 getVersionUrl : 'Android下载地址',//Android移动端下载地址
+                ua : navigator.userAgent.toLocaleLowerCase(),
+    //console.log(u);
+    //              isWeixin : u.match(/MicroMessenger/i) == 'micromessenger',//判断是不是微信浏览器
+    //              isAndroid : u.indexOf('android') > -1 || u.indexOf('linux') > -1, //android终端或者uc浏览器
+    //              isiOS : !! u.match(/(iphone|ipod|ipad|mac)/i),
+                config: {
+                    url: window.location.href, // 网址，默认使用 window.location.href
+                    source: "", // 来源（QQ空间会用到）, 默认读取head标签：<meta name="site" content="https://github.com/dongdong-cloud/dd-share" />
+                    title: "", // 标题，默认读取 document.title 或者 <meta name="title" content="vue一键分享组件" />
+                    description: "", // 描述, 默认读取head标签：<meta name="description" content="基于share.js封装的vue组件，一键分享到微博、QQ空间、QQ好友、微信、腾讯微博、豆瓣、Facebook、Twitter、Linkedin、Google+、点点等社交网站。" />
+                    image: "", // 图片, 默认取网页中第一个img标签
+                    disabled: ["google", "facebook", "twitter"], // 禁用的站点 可用站点['weibo', 'qq', 'wechat', 'douban', 'qzone', 'linkedin', 'facebook', 'twitter', 'google']
+                    wechatQrcodeTitle: "微信扫一扫：分享", // 微信二维码提示文字
+                    wechatQrcodeHelper:
+                        "<p>微信里点“发现”，扫一扫</p><p>二维码便可将本文分享至朋友圈。</p>"
+                }
+            }
+        },
+        mounted(){
+            this.getByIdFnc();
+            this.ua = navigator.userAgent;
+            let that = this;
+            this.browser = {
+                versions: function () { // 浏览器版本信息
+                    return {
+                        trident: that.ua.indexOf('Trident') > -1, // IE浏览器 trident内核
+                        presto: that.ua.indexOf('Presto') > -1, // opera浏览器 presto内核
+                        webKit: that.ua.indexOf('AppleWebKit') > -1, // chrome safari浏览器 webkit内核
+                        gecko: that.ua.indexOf('Gecko') > -1 && that.ua.indexOf('KHTML') == -1, //firefox浏览器 gecko内核
+                        mobile: !!that.ua.match(/AppleWebKit.*Mobile.*/), // 是否为移动终端
+                        ios: !!that.ua.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), // ios终端
+                        android: that.ua.indexOf('Android') > -1 || that.ua.indexOf('Linux') > -1, // android终端或UC浏览器
+                        iPad: that.ua.indexOf('iPad') > -1, //iPad终端
+                        webApp: that.ua.indexOf('Safari') == -1 //是否web应用程序，没有头部与底部
+                    }
+                }(),
+                language: (navigator.browserLanguage || navigator.language).toLowerCase() // 文档语言
+            }
+
+        },
+        methods:{
+            share(row){
+                console.log('分享')
+                console.log(this.browser.versions)
+                if (this.browser.versions.mobile) { // 判断是否是移动设备打
+                    // 在微信中打开
+                }
+                if (this.ua.match(/WeiBo/i) == "Weibo") {
+                    // 在新浪微博客户端打开
+                }
+                if (this.ua.match(/QQ/i) == "QQ") {
+                    // 在QQ端打开
+                }
+                if (this.browser.versions.ios) {
+                    this.ios();
+                    console.log(this)
+                    // 在IOS浏览器打开
+                }
+                if (this.browser.versions.android) {
+                    this.android1();
+                    // 在安卓浏览器打开
+                }
+              console.log(row)
+
+                // if (this.isAndroid) {
+                //     console.log('--')
+                //     this.android1();
+                //
+                // }
+                // if (this.isIos) {
+                //     console.log('++')
+                //     // this.ios();
+                //
+                // }
+                //     let  config = {
+                //     title: 'm-share', // 标题，默认读取document.title
+                //     desc: 'm-share的描述', // 描述, 默认读取head标签：<meta name="description" content="desc" />
+                //     link: 'http://www.dearhaoge.com/project/m-share/', // 网址，默认使用window.location.href
+                //     imgUrl: 'http://www.dearhaoge.com/project/m-share/shareIcon.jpg', // 图片, 默认取网页中第一个img标签
+                //     types: ['wx', 'wxline', 'qq', 'qzone', 'sina'], // 开启的分享图标, 默认为全部
+                //     infoMap: {
+                //         wx: {
+                //             title: 'm-share微信分享',
+                //             desc: '我是微信的分享',
+                //             link: 'http://www.dearhaoge.com/project/m-share/?ADTAG=wx',
+                //             imgUrl: 'http://www.dearhaoge.com/project/m-share/shareIcon.jpg'
+                //         }
+                //     },
+                //     // fnDoShare: function (type) {
+                //     //     console.log(1);
+                //     // }
+                // };
+                // Mshare.popup(config); //eslint-disable-line
+            },
+            // isIos(){
+            //
+            //     var u = navigator.userAgent;
+            //
+            //     if(u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)){
+            //
+            //         alert("ios");
+            //         return true
+            //
+            //     } else {
+            //         return false
+            //     }
+            //
+            // },
+            // isAndroid(){
+            //
+            //     var u = navigator.userAgent;
+            //
+            //     if(u.indexOf('Android') > -1 || u.indexOf('Linux') > -1){
+            //
+            //         alert("anzhuo");
+            //
+            //         return true;
+            //
+            //     } else {
+            //         return false
+            //     }
+            //
+            // },
+            // isWeixin(){
+            //
+            //     var ua = navigator.userAgent.toLowerCase();
+            //
+            //     if(ua.match(/MicroMessenger/i)=="micromessenger") {
+            //
+            //         return true;
+            //
+            //     } else {
+            //
+            //         return false;
+            //
+            //     }
+            //
+            // },
+            android1() {
+                //如果是微信,直接下载
+
+                if (this.browser.versions.mobile) {
+                    console.log('mobile')
+                    window.location.href = 'shopping://main'; /***Android移动端下载地址***/
+                } else {
+                    console.log('安卓')
+                    window.location.href = 'shopping://main'; /***打开app的协议，有安卓同事提供***/
+                    window.setTimeout(function () {
+                        //window.location.href = "Android下载地址";/***Android移动端下载地址***/
+                        window.location.href = this.getVersionUrl; /***Android移动端下载地址***/
+                    }, 100);
+                }
+            },
+           initwx(timestamp, signature) { // eslint-disable-next-line no-undef
+                wx.config({
+                    debug: false, //
+                    appId: '021AmV9m0eIAYp1Y2Pcm0Gs2am0AmV9J', // 公众号的唯一标识
+                    timestamp: timestamp, //生成签名的时间戳
+                    nonceStr: 'GDOU', //生成签名的随机串
+                    signature: signature,//
+                    jsApiList: ['onMenuShareTimeline', //
+                        'onMenuShareAppMessage'] //
+                });
+               console.log('999')
+               // eslint-disable-next-line no-undef
+                wx.checkJsApi({
+                    jsApiList: [
+                        'onMenuShareTimeline','onMenuShareAppMessage'
+                    ]
+                });
+               // eslint-disable-next-line no-undef
+                wx.ready(function () {
+                    var shareData = {
+                        "imgUrl" : '',    // 分享显示的缩略图地址 ,根据自己情况而定
+                        "link" : window.location.href,    // 分享地址
+                        "desc": 'title',   // 分享描述
+                        "title": 'title',   // 分享标题
+                        success : function () {
+                            // 分享成功可以做相应的数据处理
+
+                            //alert("分享成功"); }
+                        }};
+                    // eslint-disable-next-line no-undef
+                    wx.onMenuShareTimeline(shareData);//分享到朋友圈
+                    // eslint-disable-next-line no-undef
+                    wx.onMenuShareAppMessage(shareData);//分享给朋友
+                });
+            },
+            ios() {
+                // this.initwx();
+                // window.location.href="weixin://dl/chat";
+
+                 window.location.href = this.universal_link + "?schema=" + encodeURIComponent('https://apps.apple.com/us/app/id1519256883');
+            },
+            getByIdFnc(){
+                let data ={
+                    productId:this.$route.query.id
+                }
+                getById(data).then(({data: res}) => {
+                    this.data = res.data
+                    // this.list = res.list
+                });
+            }
+        }
     }
 </script>
 
 <style scoped>
+    .detailImg{
 
+    }
+    .detailImg img{
+        width: 80%;height: 80%;
+    }
 </style>
