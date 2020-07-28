@@ -3,7 +3,7 @@ import App from '@/App.vue';
 export const otherRouter = {
     path: '/',
     name: 'error-page',
-    redirect: '/overview',
+    redirect: '/',
     component: App,
     meta: {
         title: '404-页面不存在'
@@ -19,9 +19,9 @@ export const otherRouter = {
         //     component: resolve => { require(['../components/HelloWorld.vue'], resolve); }
         // },
         {
-            path: 'overview',
+            path: '/',
             title: '首页',
-            name: 'overview',
+            name: '/',
             meta: {
                 id: 1000,
                 parenId: 1
