@@ -69,7 +69,7 @@
     <div style="background-color: black;color: #fff;font-family: PingFangSC-Regular;text-align: center;font-size: 12px;line-height: 20px;height: 80px;margin: 0 auto; display: flex;
     align-items: center;/*垂直居中*/justify-content: center">
 
-      <div style="box-sizing: border-box;padding: 0 20px; ">
+      <div style="box-sizing: border-box;padding: 0 20px;margin:0 auto">
         客服邮箱：gengming861019@126.com<br>
         ©京ICP备20015736号-1 北京尚朝信息科技有限公司官网
       </div>
