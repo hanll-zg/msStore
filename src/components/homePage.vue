@@ -1,10 +1,5 @@
 <template>
     <div>
-        <van-row>
-            <van-col  >
-
-            </van-col>
-        </van-row>
         <div v-for="(item, index) in data" :key="index">
             <van-swipe :autoplay="5000" indicator-color="white">
                 <van-swipe-item v-for="(val, v) in item.images" :key="v">
@@ -38,6 +33,7 @@
             ...mapMutations(['rowList']),
             getOneTop(row){
                 this.rowList(row)
+              this.$router.push({path:'/someOmeTop'})
             },
             gettopicPro(){
                 let data ={

@@ -4,7 +4,7 @@ import VueRouter from 'vue-router'
 
 import Vuex from 'vuex'
 import {router} from './router/index'
-import store from './store'
+import store from './store/store'
 import Vant from 'vant';
 import 'vant/lib/index.css';
 import DdShare from 'dd-share'

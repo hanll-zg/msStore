@@ -1,6 +1,6 @@
 
 export default {
     rowList (state, status) {
-        state.row = status;
+        state.list = status;
     },
 };

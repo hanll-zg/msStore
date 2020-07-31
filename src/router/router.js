@@ -66,6 +66,18 @@ export const otherRouter = {
             component: resolve => {
                 require(['../components/homePage.vue'], resolve);
             }
+        },
+        {
+            path: 'someOmeTop',
+            title: '专题',
+            name: 'someOmeTop',
+            meta: {
+                id: 120,
+                parenId: 1
+            },
+            component: resolve => {
+                require(['../components/someOmeTop.vue'], resolve);
+            }
         }
 
     ]
