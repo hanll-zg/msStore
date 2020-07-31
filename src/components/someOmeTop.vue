@@ -1,5 +1,5 @@
 <template>
-  <div style="box-sizing: border-box;padding: 20px">
+  <div>
     <div style="display: flex;flex-wrap: wrap;justify-content: space-between;margin: 3%">
       <div v-for="(item, index) in topList" :key="index" style="width: 30%;flex-shrink:0;align-content: flex-start;cursor: pointer" @click="getSomeOenShop(item.id)">
         <div class="imgClas">

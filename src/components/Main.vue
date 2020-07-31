@@ -1,5 +1,7 @@
 <template>
-    <router-view></router-view>
+    <div style="box-sizing: border-box;padding: 20px">
+      <router-view></router-view>
+    </div>
 </template>
 
 <script>

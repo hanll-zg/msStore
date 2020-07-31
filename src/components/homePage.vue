@@ -1,7 +1,7 @@
 <template>
     <div>
         <div v-for="(item, index) in data" :key="index">
-            <van-swipe :autoplay="5000" indicator-color="white">
+            <van-swipe :autoplay="5000" indicator-color="white" @click="getOneTop(item.product)">
                 <van-swipe-item v-for="(val, v) in item.images" :key="v">
                     <img style="width: 80%;height: auto" :src="val" alt="">
                 </van-swipe-item>

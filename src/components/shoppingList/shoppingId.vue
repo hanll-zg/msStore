@@ -25,8 +25,8 @@
             <span v-for="(item,index) in data.catStr" :key="index" style="padding: 0 5px">
                 {{item}}
             </span><br>
-            <span  style="text-align: left">
-                {{data.productInfo}}
+            <span  style="text-align: left;font-size: 12px" v-html="data.productInfoBr">
+
             </span>
         </div>
         <van-row v-for="(item,index) in data.infos" :key="index">
@@ -261,6 +261,7 @@
                 }
                 getById(data).then(({data: res}) => {
                     this.data = res.data
+                  this.data.productInfoBr = this.data.productInfo.replace(/(\r\n|\n|\r)/gm, "<br />")
                     // this.list = res.list
                 });
             }
