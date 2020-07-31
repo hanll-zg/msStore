@@ -1,10 +1,11 @@
-import App from '@/App.vue';
+// import App from '@/App.vue';
+import Main from '../components/Main'
 
 export const otherRouter = {
     path: '/',
     name: 'error-page',
     redirect: '/',
-    component: App,
+    component: Main,
     meta: {
         title: '404-页面不存在'
     },
@@ -52,6 +53,18 @@ export const otherRouter = {
             },
             component: resolve => {
                 require(['../components/shoppingList/shoppingId.vue'], resolve);
+            }
+        },
+        {
+            path: 'homePage',
+            title: '首页',
+            name: 'homePage',
+            meta: {
+                id: 120,
+                parenId: 1
+            },
+            component: resolve => {
+                require(['../components/homePage.vue'], resolve);
             }
         }
 

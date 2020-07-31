@@ -25,8 +25,8 @@
             <div class="download-logo" align="center" style="margin-top: 20px;width: 100%;padding: 0 20px;box-sizing: border-box">
               <img style="max-width: 100%;" src="../assets/img/logo.png" alt="">
             </div>
-            <div class="download-parts" style="margin: 50px 0;box-sizing: border-box;padding: 0 20px" @click="getList()">
-              <div class="img_fd">
+            <div class="download-parts" style="margin: 50px 0;box-sizing: border-box;padding: 0 20px" >
+              <div class="img_fd" @click="getList()">
 
                 <img
                         src="../assets/img/ewm.png"
@@ -37,7 +37,7 @@
 
 
               </div>
-              <div class="img_fd" style="margin: 0 40px">
+              <div class="img_fd" style="margin: 0 40px" @click="getHomePge()">
                 <img
                         src="../assets/img/ewm.png"
                         alt="">
@@ -89,6 +89,9 @@ export default {
     }
   },
   methods:{
+    getHomePge(){
+      this.$router.push({path: '/homePage'});
+    },
     getList(){
       this.$router.push({path: '/shoppingList'});
     }
