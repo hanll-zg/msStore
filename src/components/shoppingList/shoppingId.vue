@@ -9,7 +9,7 @@
                     <img :src="src" alt="">
                 </van-swipe-item>
             </van-swipe>
-            <div style="min-height: 50px">
+            <div style="min-height: 50px;text-align: center">
                 {{data.productName}}
             </div>
             <div style="display: flex;justify-content: center">
@@ -22,7 +22,7 @@
             </div>
         </div>
         <div >
-            <span v-for="(item,index) in data.catStr" :key="index" style="padding: 0 5px">
+            <span v-for="(item,index) in data.catStr" :key="index" style="padding: 0 5px;margin: 0 auto">
                 {{item}}
             </span><br>
             <span  style="text-align: left;font-size: 12px" v-html="data.productInfoBr">
@@ -40,20 +40,40 @@
 <!--            <div style="padding: 0 40px;background-color: #fff;border-radius: 20px;height: 40px;line-height: 40px;width: 100px;cursor: pointer;border: 1px solid #999" >-->
 <!--                加入购物车-->
 <!--            </div>-->
-            <div  style="padding: 0 50px;background-color: #EFDECC;border-radius: 20px;height: 40px;line-height: 40px;width: 100px;cursor: pointer;margin-left: 20px" @click="share(data)">
-                分享
+            <div  style="padding: 0 5%;background-color: #EFDECC;border-radius: 20px;height: 40px;line-height: 40px;width: 100px;cursor: pointer;margin-left: 20px;text-align: center" @click="share(data)">
+
+            </div>
+            <div  style="padding: 0 5%;background-color: #EFDECC;border-radius: 20px;height: 40px;line-height: 40px;width: 100px;cursor: pointer;margin-left: 20px;text-align: center" >
+                <van-cell title="分享" @click="showShare = true" />
             </div>
 <!--            <dd-share class="social-share" :share-config="config"></dd-share>-->
         </div>
+
+        <van-share-sheet
+                v-model="showShare"
+                title="立即分享给好友"
+                :options="options"
+                @select="onSelect"
+        />
     </div>
 </template>
 
 <script>
     import {getById}  from '../../api/api'
+    import { Toast } from 'vant';
     export default {
         name: "shoppingId",
         data(){
             return{
+                showShare:false,
+                showFx:false,
+                options: [
+                    { name: '微信', icon: 'wechat' },
+                    { name: '微博', icon: 'weibo' },
+                    { name: '复制链接', icon: 'link' },
+                    { name: '分享海报', icon: 'poster' },
+                    { name: '二维码', icon: 'qrcode' },
+                ],
                 data: {
                     id: ''
                 },
@@ -102,6 +122,14 @@
 
         },
         methods:{
+            onSelect(option) {
+                Toast(option.name);
+                console.log(option)
+                if (option.name == '微信'){
+                    this.getConfig()
+                }
+                this.showShare = false;
+            },
             share(row){
                 console.log('分享')
                 console.log(this.browser.versions)
@@ -217,7 +245,7 @@
            initwx(timestamp, signature) { // eslint-disable-next-line no-undef
                 wx.config({
                     debug: false, //
-                    appId: '021AmV9m0eIAYp1Y2Pcm0Gs2am0AmV9J', // 公众号的唯一标识
+                    appId: 'wx78c209a7e241fc12"', // 公众号的唯一标识
                     timestamp: timestamp, //生成签名的时间戳
                     nonceStr: 'GDOU', //生成签名的随机串
                     signature: signature,//
@@ -263,6 +291,77 @@
                     this.data = res.data
                   this.data.productInfoBr = this.data.productInfo.replace(/(\r\n|\n|\r)/gm, "<br />")
                     // this.list = res.list
+                });
+            },
+            //  分享 调用sdk
+            // 微信分参数
+            getConfig() {
+                this.showFx = true
+                // var _this=this;
+                // let url = location.href.split('#')[0] //获取锚点之前的链接
+                let url = encodeURIComponent(window.location.href.split('#')[0]) //获取锚点之前的链接
+                console.log(url)
+                this.wxInit()
+                // https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirect
+                // let data = {}
+                // getById(data).then(({data: res}) => {
+                //     // let res = JSON.parse(response.data.data);
+                //     console.log(res)
+                //     _this.wxInit(res);
+                // });
+            },
+            // 微信分享
+            wxInit(res) {
+                var _this=this;
+                let url = window.location.href.split('?')[0] //获取锚点之前的链接
+                console.log(url)
+                // let links = url+'#/Food/' + this.$route.params.id;
+                let links = url+'#/product/productDetails?pid='+_this.$route.query.pid;
+                console.log(links)
+                let title = '晓峰科技';
+                let desc = '了解更多，请关注“晓峰科技”公众号';
+                let imgUrl = 'http://wx.qlogo.cn/mmhead/Q3auHgzwzM4soO2NoID1uZPHibOVgkJoPoaelibibF3GagvW2o43wRASA/0';
+                _this.wx.config({
+                    debug: false,
+                    appId: 'wx78c209a7e241fc12',
+                    timestamp: res.timestamp,
+                    nonceStr: res.nonceStr,
+                    signature: res.signature,
+                    jsApiList: ['onMenuShareAppMessage', 'onMenuShareTimeline']
+                });
+                _this.wx.ready(function() {
+                    _this.wx.onMenuShareAppMessage({
+                        title: title, // 分享标题
+                        desc: desc, // 分享描述
+                        link: links, // 分享链接
+                        imgUrl: imgUrl, // 分享图标
+                        success: function() {
+                            alert('分享成功')
+                            _this.showFx =false;
+                        },
+                        cancel: function() {
+                            alert('分享失败')
+                            _this.showFx =false;
+                        }
+                    });
+                    //微信分享菜单测试
+                    _this.wx.onMenuShareTimeline({
+                        title: title, // 分享标题
+                        desc: desc, // 分享描述
+                        link: links, // 分享链接
+                        imgUrl: imgUrl, // 分享图标
+                        success: function() {
+                            alert('分享成功')
+                            _this.isShow =true;
+                        },
+                        cancel: function() {
+                            alert('分享失败')
+                            _this.isShow =true;
+                        }
+                    })
+                });
+                _this.wx.error(function(err) {
+                    alert(JSON.stringify(err))
                 });
             }
         }

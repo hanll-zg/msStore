@@ -2,7 +2,7 @@
     <div>
         <div v-for="(item, index) in data" :key="index">
             <van-swipe :autoplay="5000" indicator-color="white" @click="getOneTop(item.product)">
-                <van-swipe-item v-for="(val, v) in item.images" :key="v">
+                <van-swipe-item v-for="(val, v) in item.images" :key="v" style="text-align: center">
                     <img style="width: 80%;height: auto" :src="val" alt="">
                 </van-swipe-item>
             </van-swipe>
@@ -10,6 +10,9 @@
                 <div class="miniStreamView">
                     <span v-for="(val, i) in item.product" :key="i">
                         <img :src="val.images[0]" alt=""  @click="getOneTop(item.product)">
+                    </span>
+                    <span>
+                        {{item.productName}}
                     </span>
                 </div>
             </div>
@@ -59,8 +62,8 @@
         white-space:nowrap;
     }
     .miniStreamView{
-        width:80px;
-        height:80px;
+        width:130px;
+        height:130px;
         display: inline-block;
         margin:6px;
     }
@@ -74,7 +77,7 @@
         border: 1px solid rosybrown;
     }
     .miniStreamView img {
-        width: 60px;height: 60px;
+        width: 130px;height: 130px;
 
     }
 </style>

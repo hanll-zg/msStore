@@ -14,9 +14,10 @@ Vue.use(Vant);
 Vue.config.productionTip = false
 Vue.use(VueRouter)
 
-
+import wx from 'weixin-js-sdk';//引入
+Vue.prototype.wx = wx//
 import axios from 'axios'
-axios.defaults.baseURL = 'http://47.96.93.202:9999/'
+axios.defaults.baseURL = 'http://192.168.1.142:9999/'
 Vue.prototype.axios = axios
 import Viewer from 'v-viewer'
 import 'viewerjs/dist/viewer.css'

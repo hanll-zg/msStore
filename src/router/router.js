@@ -78,6 +78,30 @@ export const otherRouter = {
             component: resolve => {
                 require(['../components/someOmeTop.vue'], resolve);
             }
+        },
+        {
+            path: 'aboutMe',
+            title: '关于我们',
+            name: 'aboutMe',
+            meta: {
+                id: 120,
+                parenId: 1
+            },
+            component: resolve => {
+                require(['../components/aboutMe/aboutMe.vue'], resolve);
+            }
+        },
+        {
+            path: 'download',
+            title: '下载',
+            name: 'download',
+            meta: {
+                id: 120,
+                parenId: 1
+            },
+            component: resolve => {
+                require(['../components/download/download.vue'], resolve);
+            }
         }
 
     ]
