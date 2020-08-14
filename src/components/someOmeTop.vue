@@ -14,16 +14,32 @@
 </template>
 
 <script>
+  import {topicId} from '../api/api'
 export default {
   name: "someOmeTop",
   data(){
     return{
-      topList: this.$store.state.list
+      listId: this.$store.state.listId,
+      topList: []
     }
+  },
+  mounted() {
+      this.getList()
   },
   methods:{
     getSomeOenShop(id){
       this.$router.push({ path: 'shoppingId', query: {id:id} });
+    },
+    getList(){
+      let data ={
+        currentPage: 2,
+        topicId: this.$store.state.listId
+      }
+      topicId(data).then(({data: res}) => {
+        console.log(res)
+        // this.data = res.data.topic
+        // this.list = res.list
+      });
     }
   }
 }
@@ -31,6 +47,6 @@ export default {
 
 <style scoped>
   .imgClas img{
-    width: 30%;height: 30%;border-radius: 5%;text-align: center;
+    width: 100%;height: 100%;border-radius: 5%;text-align: center;
   }
 </style>

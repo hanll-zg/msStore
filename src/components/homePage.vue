@@ -1,16 +1,14 @@
 <template>
     <div>
         <div v-for="(item, index) in data" :key="index">
-            <van-swipe :autoplay="5000" indicator-color="white" @click="getOneTop(item.product)">
-                <van-swipe-item v-for="(val, v) in item.images" :key="v" style="text-align: center">
+            <van-swipe :autoplay="500000" indicator-color="white">
+                <van-swipe-item v-for="(val, v) in item.images" :key="v" style="text-align: center"  @click="getOneTop(item)">
                     <img style="width: 80%;height: auto" :src="val" alt="">
                 </van-swipe-item>
             </van-swipe>
-            <div  class="minVideoViewBox">
-                <div class="miniStreamView">
-                    <span v-for="(val, i) in item.product" :key="i">
-                        <img :src="val.images[0]" alt=""  @click="getOneTop(item.product)">
-                    </span>
+            <div>
+                <div class="miniStreamView" v-for="(val, i) in item.product" :key="i">
+                    <img :src="val.images[0]" alt=""  @click="getOneTop(item)">
                     <span>
                         {{item.productName}}
                     </span>
@@ -33,10 +31,11 @@
             }
        },
         methods : {
-            ...mapMutations(['rowList']),
+            ...mapMutations(['rowListId']),
             getOneTop(row){
-                this.rowList(row)
-              this.$router.push({path:'/someOmeTop'})
+                this.rowListId(row.id)
+                console.log(row)
+                this.$router.push({path:'/someOmeTop'})
             },
             gettopicPro(){
                 let data ={
@@ -62,10 +61,8 @@
         white-space:nowrap;
     }
     .miniStreamView{
-        width:130px;
-        height:130px;
+        width:33%;
         display: inline-block;
-        margin:6px;
     }
     .demo1 {
         height: 92px;
@@ -77,7 +74,7 @@
         border: 1px solid rosybrown;
     }
     .miniStreamView img {
-        width: 130px;height: 130px;
+        width: 100%;
 
     }
 </style>

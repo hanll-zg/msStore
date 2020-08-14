@@ -4,20 +4,30 @@
             商品详情
         </div>
         <div>
-            <van-swipe class="detailImg zmy-swipe" :autoplay="3000" indicator-color="white">
-                <van-swipe-item  v-for="(src, index) in data.images" :key="index">
+            <van-swipe class="detailImg zmy-swipe" :autoplay="300000" indicator-color="white">
+                <van-swipe-item  v-for="(src, index) in data.images" :key="index" style="display: flex;align-items: center;text-align: center;">
                     <img :src="src" alt="">
                 </van-swipe-item>
             </van-swipe>
             <div style="min-height: 50px;text-align: center">
                 {{data.productName}}
             </div>
-            <div style="display: flex;justify-content: center">
-                <div style="color: #FF87C7E9;height: 50px;margin: 0 30px">
-                    {{data.price}}
+            <div style="margin: 0 auto">
+                <div style="display: flex;width: 50%;flex-shrink: 0;margin: 0 auto">
+                    <div style="color: #FF87C7E9;height: 50px;width: 150px;font-size: 20px" v-if="data.price != undefined">
+                        ${{data.price}}
+                    </div>
+                    <div style="height: 50px;width: 150px;;line-height: 22px;text-align: right" v-if="data.salePrice != undefined">
+                        <del>${{data.salePrice}}</del>
+                    </div>
                 </div>
-                <div style="height: 50px;margin: 0 30px">
-                    <del>{{data.salePrice}}</del>
+                <div style="display: flex;width: 50%;flex-shrink: 0;margin: 0 auto">
+                    <div style="color: #FF87C7E9;height: 50px;width: 150px;font-size: 20px" v-if="data.rmb != undefined">
+                        ¥{{data.rmb}}
+                    </div>
+                    <div style="height: 50px;width: 150px;line-height: 22px;text-align: right" v-if="data.priceRMB != undefined">
+                        <del>¥{{data.priceRMB}}</del>
+                    </div>
                 </div>
             </div>
         </div>
@@ -33,28 +43,21 @@
             <van-col span="4" offset="1">{{item[0]}}</van-col>
             <van-col span="18" >{{item[1]}}</van-col>
         </van-row>
-<!--        <div  @click="share(data)">-->
-<!--            +++++++++++++++++++++++-->
-<!--        </div>-->
-        <div style="display: flex;justify-content: center;padding: 30px 0">
-<!--            <div style="padding: 0 40px;background-color: #fff;border-radius: 20px;height: 40px;line-height: 40px;width: 100px;cursor: pointer;border: 1px solid #999" >-->
-<!--                加入购物车-->
-<!--            </div>-->
-            <div  style="padding: 0 5%;background-color: #EFDECC;border-radius: 20px;height: 40px;line-height: 40px;width: 100px;cursor: pointer;margin-left: 20px;text-align: center" @click="share(data)">
+           <div style="display: flex">
+               <div  style="padding: 0 5%;background-color: #EFDECC;border-radius: 20px;height: 40px;line-height: 40px;width: 100px;cursor: pointer;margin-left: 20px;text-align: center;font-size: 14px" @click="share(data)">添加到收藏夹
+               </div>
+               <div  style="padding: 0 5%;background-color: #EFDECC;border-radius: 20px;height: 40px;line-height: 40px;width: 100px;cursor: pointer;margin-left: 20px;text-align: center" >
+                   <van-cell style="background-color:#EFDECC;padding: 8px 16px " title="分享" @click="showShare = true" />
 
-            </div>
-            <div  style="padding: 0 5%;background-color: #EFDECC;border-radius: 20px;height: 40px;line-height: 40px;width: 100px;cursor: pointer;margin-left: 20px;text-align: center" >
-                <van-cell title="分享" @click="showShare = true" />
-            </div>
+               </div>
+           </div>
 <!--            <dd-share class="social-share" :share-config="config"></dd-share>-->
-        </div>
-
-        <van-share-sheet
+        <!--<van-share-sheet
                 v-model="showShare"
                 title="立即分享给好友"
                 :options="options"
                 @select="onSelect"
-        />
+        />-->
     </div>
 </template>
 
@@ -130,103 +133,29 @@
                 }
                 this.showShare = false;
             },
-            share(row){
-                console.log('分享')
-                console.log(this.browser.versions)
-                if (this.browser.versions.mobile) { // 判断是否是移动设备打
-                    // 在微信中打开
-                }
-                if (this.ua.match(/WeiBo/i) == "Weibo") {
-                    // 在新浪微博客户端打开
-                }
-                if (this.ua.match(/QQ/i) == "QQ") {
-                    // 在QQ端打开
-                }
-                if (this.browser.versions.ios) {
-                    this.ios();
-                    console.log(this)
-                    // 在IOS浏览器打开
-                }
-                if (this.browser.versions.android) {
-                    this.android1();
-                    // 在安卓浏览器打开
-                }
-              console.log(row)
-
-                // if (this.isAndroid) {
-                //     console.log('--')
+            share(row) {
+                // console.log('分享')
+                // console.log(this.browser.versions)
+                // if (this.browser.versions.mobile) { // 判断是否是移动设备打
+                //     // 在微信中打开
+                // }
+                // if (this.ua.match(/WeiBo/i) == "Weibo") {
+                //     // 在新浪微博客户端打开
+                // }
+                // if (this.ua.match(/QQ/i) == "QQ") {
+                //     // 在QQ端打开
+                // }
+                // if (this.browser.versions.ios) {
+                //     this.ios();
+                //     console.log(this)
+                //     // 在IOS浏览器打开
+                // }
+                // if (this.browser.versions.android) {
                 //     this.android1();
-                //
+                //     // 在安卓浏览器打开
                 // }
-                // if (this.isIos) {
-                //     console.log('++')
-                //     // this.ios();
-                //
-                // }
-                //     let  config = {
-                //     title: 'm-share', // 标题，默认读取document.title
-                //     desc: 'm-share的描述', // 描述, 默认读取head标签：<meta name="description" content="desc" />
-                //     link: 'http://www.dearhaoge.com/project/m-share/', // 网址，默认使用window.location.href
-                //     imgUrl: 'http://www.dearhaoge.com/project/m-share/shareIcon.jpg', // 图片, 默认取网页中第一个img标签
-                //     types: ['wx', 'wxline', 'qq', 'qzone', 'sina'], // 开启的分享图标, 默认为全部
-                //     infoMap: {
-                //         wx: {
-                //             title: 'm-share微信分享',
-                //             desc: '我是微信的分享',
-                //             link: 'http://www.dearhaoge.com/project/m-share/?ADTAG=wx',
-                //             imgUrl: 'http://www.dearhaoge.com/project/m-share/shareIcon.jpg'
-                //         }
-                //     },
-                //     // fnDoShare: function (type) {
-                //     //     console.log(1);
-                //     // }
-                // };
-                // Mshare.popup(config); //eslint-disable-line
+                console.log(row)
             },
-            // isIos(){
-            //
-            //     var u = navigator.userAgent;
-            //
-            //     if(u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)){
-            //
-            //         alert("ios");
-            //         return true
-            //
-            //     } else {
-            //         return false
-            //     }
-            //
-            // },
-            // isAndroid(){
-            //
-            //     var u = navigator.userAgent;
-            //
-            //     if(u.indexOf('Android') > -1 || u.indexOf('Linux') > -1){
-            //
-            //         alert("anzhuo");
-            //
-            //         return true;
-            //
-            //     } else {
-            //         return false
-            //     }
-            //
-            // },
-            // isWeixin(){
-            //
-            //     var ua = navigator.userAgent.toLowerCase();
-            //
-            //     if(ua.match(/MicroMessenger/i)=="micromessenger") {
-            //
-            //         return true;
-            //
-            //     } else {
-            //
-            //         return false;
-            //
-            //     }
-            //
-            // },
             android1() {
                 //如果是微信,直接下载
 
@@ -373,6 +302,6 @@
 
     }
     .detailImg img{
-        width: 80%;height: 80%;
+        width: 100%;height: 100%
     }
 </style>

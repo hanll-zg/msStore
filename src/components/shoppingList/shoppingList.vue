@@ -4,21 +4,29 @@
         <van-row gutter="20">
             <van-col v-for="(item, index) in list" :key="index" span="12" style="word-wrap: break-word;white-space: normal;word-break: break-all;text-align: left">
                 <div>
-                    <van-swipe class=" imgClass zmy-swipe" :autoplay="3000" indicator-color="white">
+                    <van-swipe class=" imgClass zmy-swipe" :autoplay="300000" indicator-color="white">
                         <van-swipe-item  v-for="(src, index) in item.images" :key="index" @click="getId(item)">
                             <img :src="src" alt="">
                         </van-swipe-item>
                     </van-swipe>
                 </div>
-                <div style="min-height: 50px">
+                <div style="min-height: 50px;font-size: 12px">
                     {{item.productName}}
                 </div>
                 <div style="display: flex;justify-content: space-between">
-                    <div style="color: #FF87C7E9;height: 50px">
-                        {{item.price}}
+                    <div style="color: #FF87C7E9;height: 30px">
+                        ${{item.price}}
                     </div>
                     <div style="height: 50px">
-                        <del>{{item.salePrice}}</del>
+                        <del>${{item.salePrice}}</del>
+                    </div>
+                </div>
+                <div style="display: flex;justify-content: space-between">
+                    <div style="color: #FF87C7E9;height: 30px" v-if="item.rmb != undefined">
+                        ¥{{item.rmb}}
+                    </div>
+                    <div style="height: 50px" v-if="item.priceRMB != undefined">
+                        <del>¥{{item.priceRMB}}</del>
                     </div>
                 </div>
             </van-col>
@@ -62,6 +70,7 @@
 
 <style scoped>
     .imgClass img{
-        width: 200px;height: 200px;
+        height: auto;
+        width: 100%;
     }
 </style>
