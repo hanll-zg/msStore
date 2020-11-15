@@ -20,6 +20,18 @@ export const otherRouter = {
         //     component: resolve => { require(['../components/HelloWorld.vue'], resolve); }
         // },
         {
+            path: '/PrivacyAreement',
+            title: '隐私协议',
+            name: '/PrivacyAreement',
+            meta: {
+                id: 1000,
+                parenId: 1
+            },
+            component: resolve => {
+                require(['../components/PrivacyAreement.vue'], resolve);
+            }
+        },
+        {
             path: '/',
             title: '首页',
             name: '/',

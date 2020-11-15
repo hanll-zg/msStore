@@ -78,6 +78,7 @@
 </template>
 
 <script>
+import {post_file_getFileList, topicPro} from '../api/api'
 export default {
   name: 'HelloWorld',
   props: {
@@ -88,7 +89,15 @@ export default {
 
     }
   },
+  mounted() {
+    this.ceshi()
+  },
   methods:{
+    ceshi(){
+      post_file_getFileList().then(({data: res}) => {
+
+      });
+    },
     getHomePge(){
       this.$router.push({path: '/homePage'});
     },
